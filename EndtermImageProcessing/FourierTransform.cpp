@@ -76,7 +76,7 @@ complex<double>* FourierTransform::FFT(complex<double> *signal, int cols, Direct
 		for (int k = 0; k < half; k++)
 		{
 			//Số hạng bên phải của công thức = hệ số * X_của_các_tần_số_tại_vị_trí_lẻ
-			complex<double> rightArg = polar(1.0, -2.0 * M_PI * k / cols) * freqOdd[k];
+			complex<double> rightArg = polar(1.0, 2.0 * M_PI * k / cols) * freqOdd[k];
 
 			/*
 			X[k] = X_của_các_tần_số_tại_vị_trí_chẵn[k] + hệ số * X_của_các_tần_số_tại_vị_trí_lẻ[k]
