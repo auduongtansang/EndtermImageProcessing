@@ -33,5 +33,5 @@ public:
 	Hàm biến đổi Fourier nhanh cho tín hiệu rời rạc 2D
 	Số mẫu của mỗi chiều trong tín hiệu phải là lũy thừa của 2
 	*/
-	vector<complex<double>> FFT2(vector<complex<double>> signal, Direction direction);
+	vector<vector<complex<double>>> FFT2(vector<vector<complex<double>>> signal, Direction direction);
 };

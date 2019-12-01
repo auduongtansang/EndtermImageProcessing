@@ -61,7 +61,7 @@ vector<complex<double>> FourierTransform::FFT(vector<complex<double>> signal, Di
 		for (int i = 0; i < half; i++)
 		{
 			//Hệ số
-			complex<double> oddCoefficent = polar(1.0, -2.0 * 3.14 * i / n);
+			complex<double> oddCoefficent = polar(1.0, -2.0 * M_PI * i / n);
 
 			/*
 			F[k] = F_của_các_mẫu_tại_vị_trí_chẵn[k] + hệ số * F_của_các_mẫu_tại_vị_trí_lẻ[k]
@@ -75,7 +75,35 @@ vector<complex<double>> FourierTransform::FFT(vector<complex<double>> signal, Di
 	return freqFinal;
 }
 
-vector<complex<double>> FourierTransform::FFT2(vector<complex<double>> signal, Direction direction)
+vector<vector<complex<double>>> FourierTransform::FFT2(vector<vector<complex<double>>> signal, Direction direction)
 {
-	return vector<complex<double>>();
+	/*
+	Biến đổi Fourier rời rạc cho tín hiệu 2D
+	Biến đổi từng dòng, sau đó biến đổi từng cột
+	*/
+	int rows = (int)(signal.size());
+	int cols = (int)(signal[0].size());
+	vector<vector<complex<double>>> freq(rows);
+
+	//Biến đổi dòng
+	for (int i = 0; i < rows; i++)
+		freq[i] = FFT(signal[i], direction);
+
+	//Biến đổi cột (chuyển vị => biến đổi dòng => chuyển vị)
+	vector<vector<complex<double>>> freqT(cols);
+	for (int i = 0; i < cols; i++)
+	{
+		//Chuyển vị
+		freqT[i] = vector<complex<double>>(rows);
+		for (int j = 0; j < rows; j++)
+			freqT[i][j] = freq[j][i];
+		//Biến đổi dòng
+		freqT[i] = FFT(freqT[i], direction);
+	}
+	//Chuyển vị lại vị trí cũ
+	for (int i = 0; i < rows; i++)
+		for (int j = 0; j < cols; j++)
+			freq[i][j] = freqT[j][i];
+
+	return freq;
 }
