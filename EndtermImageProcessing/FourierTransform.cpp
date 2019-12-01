@@ -61,15 +61,15 @@ vector<complex<double>> FourierTransform::FFT(vector<complex<double>> signal, Di
 		//Biến đổi thuận
 		for (int i = 0; i < half; i++)
 		{
-			//Hệ số
-			complex<double> oddCoefficent = polar(1.0, -2.0 * M_PI * i / n);
+			//Số hạng bên phải của công thức = hệ số * F_của_các_mẫu_tại_vị_trí_lẻ
+			complex<double> rightArg = polar(1.0, -2.0 * M_PI * i / n) * freqOdd[i];
 
 			/*
 			F[k] = F_của_các_mẫu_tại_vị_trí_chẵn[k] + hệ số * F_của_các_mẫu_tại_vị_trí_lẻ[k]
 			Miền tần số lặp lại nhưng nghịch dấu ở các mẫu tại vị trí lẻ
 			*/
-			freqFinal[i] = freqEven[i] + oddCoefficent * freqOdd[i];
-			freqFinal[i + half] = freqEven[i] - oddCoefficent * freqOdd[i];
+			freqFinal[i] = freqEven[i] + rightArg;
+			freqFinal[i + half] = freqEven[i] - rightArg;
 		}
 	}
 	else
@@ -77,15 +77,15 @@ vector<complex<double>> FourierTransform::FFT(vector<complex<double>> signal, Di
 		//Biến đổi ngược
 		for (int i = 0; i < half; i++)
 		{
-			//Hệ số
-			complex<double> oddCoefficent = polar(1.0, 2.0 * M_PI * i / n);
+			//Số hạng bên phải của công thức = hệ số * X_của_các_tần_số_tại_vị_trí_lẻ
+			complex<double> rightArg = polar(1.0, -2.0 * M_PI * i / n) * freqOdd[i];
 
 			/*
 			X[k] = X_của_các_tần_số_tại_vị_trí_chẵn[k] + hệ số * X_của_các_tần_số_tại_vị_trí_lẻ[k]
-			Miền thời gian cũng lặp lại nhưng nghịch dấu ở các mẫu tại các tần số lẻ
+			Miền không gian cũng lặp lại nhưng nghịch dấu ở các tần số tại vị trí lẻ
 			*/
-			freqFinal[i] = freqEven[i] + oddCoefficent * freqOdd[i];
-			freqFinal[i + half] = freqEven[i] - oddCoefficent * freqOdd[i];
+			freqFinal[i] = freqEven[i] + rightArg;
+			freqFinal[i + half] = freqEven[i] - rightArg;
 		}
 	}
 
@@ -107,11 +107,10 @@ vector<vector<complex<double>>> FourierTransform::FFT2(vector<vector<complex<dou
 		freq[i] = FFT(signal[i], direction);
 
 	//Biến đổi cột (chuyển vị => biến đổi dòng => chuyển vị)
-	vector<vector<complex<double>>> freqT(cols);
+	vector<vector<complex<double>>> freqT(cols, vector<complex<double>>(rows));
 	for (int i = 0; i < cols; i++)
 	{
 		//Chuyển vị
-		freqT[i] = vector<complex<double>>(rows);
 		for (int j = 0; j < rows; j++)
 			freqT[i][j] = freq[j][i];
 		//Biến đổi dòng
@@ -122,7 +121,7 @@ vector<vector<complex<double>>> FourierTransform::FFT2(vector<vector<complex<dou
 		for (int j = 0; j < cols; j++)
 			freq[i][j] = freqT[j][i];
 
-	//Nếu là biến đổi ngược, chia tất cả cho tổng số mẫu
+	//Nếu là biến đổi nghịch, chia tất cả cho tổng số mẫu
 	if (direction == Direction::Backward)
 	{
 		for (int i = 0; i < rows; i++)

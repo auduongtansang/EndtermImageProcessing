@@ -2,5 +2,6 @@
 x64/
 *.jpg
 *.png
+*.bmp
 *.dll
 EndtermImageProcessing/x64/
