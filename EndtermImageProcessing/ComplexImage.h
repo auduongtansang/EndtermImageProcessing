@@ -11,7 +11,10 @@ using namespace cv;
 class ComplexImage
 {
 	//Ma trận ảnh phức
-	vector<vector<complex<double>>> data;
+	complex<double> *data;
+
+	//Kích thước data
+	int dataRows, dataCols;
 
 	//Kích thước của ảnh
 	int rows, cols;

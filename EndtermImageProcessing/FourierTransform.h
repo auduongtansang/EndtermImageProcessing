@@ -27,11 +27,11 @@ public:
 	Hàm biến đổi Fourier nhanh cho tín hiệu rời rạc 1D
 	Số mẫu của mỗi chiều trong tín hiệu phải là lũy thừa của 2
 	*/
-	vector<complex<double>> FFT(vector<complex<double>> signal, Direction direction);
+	complex<double>* FFT(complex<double> *signal, int cols, Direction direction);
 
 	/*
 	Hàm biến đổi Fourier nhanh cho tín hiệu rời rạc 2D
 	Số mẫu của mỗi chiều trong tín hiệu phải là lũy thừa của 2
 	*/
-	vector<vector<complex<double>>> FFT2(vector<vector<complex<double>>> signal, Direction direction);
+	complex<double>* FFT2(complex<double> *signal, int rows, int cols, Direction direction);
 };

@@ -2,14 +2,15 @@
 
 ComplexImage::ComplexImage()
 {
-	data.clear();
-	rows = cols = 0;
+	data = nullptr;
+	dataRows = dataCols = rows = cols = 0;
 	isFourierTransformed = false;
 }
 
 ComplexImage::~ComplexImage()
 {
-	data.clear();
+	if (data != nullptr)
+		delete[] data;
 }
 
 void ComplexImage::FromOpenCVMat(Mat image)
@@ -18,14 +19,18 @@ void ComplexImage::FromOpenCVMat(Mat image)
 	rows = image.rows;
 	cols = image.cols;
 
-	int dataRows = 2, dataCols = 2;
+	dataRows = 2;
+	dataCols = 2;
+
 	while (dataRows < rows)
 		dataRows *= 2;
 	while (dataCols < cols)
 		dataCols *= 2;
 
 	//Khởi tạo toàn bộ data bằng 0
-	data = vector<vector<complex<double>>>(dataRows, vector<complex<double>>(dataCols, 0));
+	delete[] data;
+	data = new complex<double>[dataRows * dataCols];
+	memset(data, 0, dataRows * dataCols * sizeof(complex<double>));
 
 	//Duyệt ảnh, đưa dữ liệu vào data
 	uchar* pRow = image.data;
@@ -33,7 +38,7 @@ void ComplexImage::FromOpenCVMat(Mat image)
 	{
 		uchar* pData = pRow;
 		for (int j = 0; j < cols; j++, pData++)
-			data[i][j] = complex<double>(*pData, 0) * pow(-1.0, i + j);
+			data[i * dataCols + j] = complex<double>(*pData, 0) * pow(-1.0, i + j);
 	}
 }
 
@@ -44,33 +49,36 @@ Mat ComplexImage::ToOpenCVMat()
 	//Nếu data đang ở trạng thái tần số, trả về ảnh biên độ
 	if (isFourierTransformed == true)
 	{
-		int dataRows = (int)(data.size()), dataCols = (int)(data[0].size());
 		image = Mat(dataRows, dataCols, CV_8UC1, Scalar(0));
 
 		//Tính tất cả biên độ và tìm biên độ lớn nhất
-		vector<vector<double>> magnitude(dataRows, vector<double>(dataCols));
+		double* magnitude = new double[dataRows * dataCols];
 		double maxMag = -9999999999999999999.0;
+
 		for (int i = 0; i < dataRows; i++)
 		{
 			for (int j = 0; j < dataCols; j++)
 			{
-				magnitude[i][j] = norm(data[i][j]);
-				if (maxMag < magnitude[i][j])
-					maxMag = magnitude[i][j];
+				magnitude[i * dataCols + j] = norm(data[i * dataCols + j]);
+				if (maxMag < magnitude[i * dataCols + j])
+					maxMag = magnitude[i * dataCols + j];
 			}
 		}
 
 		//Log scale và lưu biên độ vào ảnh kết quả
 		double c = 255.0 / log10(1.0 + maxMag);
 		uchar* pRow = image.data;
+
 		for (int i = 0; i < dataRows; i++, pRow += dataCols)
 		{
 			uchar* pData = pRow;
 			for (int j = 0; j < dataCols; j++, pData++)
-				*pData = (uchar)(round(c * log10(1.0 + magnitude[i][j])));
+				*pData = (uchar)(round(c * log10(1.0 + magnitude[i * dataCols + j])));
 		}
+
+		delete[] magnitude;
 	}
-	//Ngược lại, nếu đang ở trạng thái không gian, trả về ảnh xám
+	//Ngược lại, nếu data đang ở trạng thái không gian, trả về ảnh xám
 	else
 	{
 		image = Mat(rows, cols, CV_8UC1, Scalar(0));
@@ -81,7 +89,7 @@ Mat ComplexImage::ToOpenCVMat()
 		{
 			uchar* pData = pRow;
 			for (int j = 0; j < cols; j++, pData++)
-				*pData = (uchar)(round(data[i][j].real() * pow(-1.0, i + j)));
+				*pData = (uchar)(round(data[i * dataCols + j].real() * pow(-1.0, i + j)));
 		}
 	}
 
@@ -91,13 +99,13 @@ Mat ComplexImage::ToOpenCVMat()
 void ComplexImage::ForwardFourierTransform()
 {
 	FourierTransform transformer;
-	data = transformer.FFT2(data, Direction::Forward);
+	data = transformer.FFT2(data, dataRows, dataCols, Direction::Forward);
 	isFourierTransformed = true;
 }
 
 void ComplexImage::BackwardFourierTransform()
 {
 	FourierTransform transformer;
-	data = transformer.FFT2(data, Direction::Backward);
+	data = transformer.FFT2(data, dataRows, dataCols, Direction::Backward);
 	isFourierTransformed = false;
 }
