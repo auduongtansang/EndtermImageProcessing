@@ -10,7 +10,7 @@ using namespace cv;
 int main()
 {
 	//Load ảnh test
-	Mat img = imread("cameraman.bmp", IMREAD_GRAYSCALE);
+	Mat img = imread("cameraman.png", IMREAD_GRAYSCALE);
 	imshow("Original", img);
 
 	//Chuyển sang dạng ảnh phức
@@ -19,10 +19,11 @@ int main()
 
 	//Biến đổi Fourier thuận
 	cImg.ForwardFourierTransform();
+	imshow("Frequency", cImg.ToOpenCVMat());
 
-	//Chuyển sang dạng ảnh thực và hiển thị
-	Mat fImg = cImg.ToOpenCVMat();
-	imshow("Frequency", fImg);
+	//Biến đổi Fourier nghịch
+	cImg.BackwardFourierTransform();
+	imshow("Inverse", cImg.ToOpenCVMat());
 
 	waitKey(0);
 	return 0;

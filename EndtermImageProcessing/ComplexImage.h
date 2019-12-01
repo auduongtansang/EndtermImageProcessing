@@ -16,7 +16,7 @@ class ComplexImage
 	//Kích thước của ảnh
 	int rows, cols;
 
-	//Trạng thái hiện tại của ảnh (đang ở dạng tín hiệu hay dạng tần số)
+	//Trạng thái hiện tại của ảnh (đang ở dạng không gian hay dạng tần số)
 	bool isFourierTransformed;
 
 public:

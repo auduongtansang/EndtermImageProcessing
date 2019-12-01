@@ -60,14 +60,28 @@ Mat ComplexImage::ToOpenCVMat()
 			}
 		}
 
-		//Log scale và lưu data vào ảnh kết quả
+		//Log scale và lưu biên độ vào ảnh kết quả
 		double c = 255.0 / log10(1.0 + maxMag);
 		uchar* pRow = image.data;
 		for (int i = 0; i < dataRows; i++, pRow += dataCols)
 		{
 			uchar* pData = pRow;
 			for (int j = 0; j < dataCols; j++, pData++)
-				*pData = (uchar)(c * log10(1.0 + magnitude[i][j]));
+				*pData = (uchar)(round(c * log10(1.0 + magnitude[i][j])));
+		}
+	}
+	//Ngược lại, nếu đang ở trạng thái không gian, trả về ảnh xám
+	else
+	{
+		image = Mat(rows, cols, CV_8UC1, Scalar(0));
+
+		//Duyệt và đưa phần thực của data vào ảnh kết quả
+		uchar* pRow = image.data;
+		for (int i = 0; i < rows; i++, pRow += cols)
+		{
+			uchar* pData = pRow;
+			for (int j = 0; j < cols; j++, pData++)
+				*pData = (uchar)(round(data[i][j].real() * pow(-1.0, i + j)));
 		}
 	}
 
