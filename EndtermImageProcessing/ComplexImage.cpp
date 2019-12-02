@@ -76,6 +76,9 @@ Mat ComplexImage::ToOpenCVMat()
 				*pData = (uchar)(round(c * log10(1.0 + magnitude[i * dataCols + j])));
 		}
 
+		//Resize kích thước cho giống với ảnh gốc
+		resize(image, image, Size(cols, rows), 0, 0, 1);
+
 		delete[] magnitude;
 	}
 	//Ngược lại, nếu data đang ở trạng thái không gian, trả về ảnh xám
