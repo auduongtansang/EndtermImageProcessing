@@ -2,7 +2,6 @@
 #include <opencv2/opencv.hpp>
 #include "FourierTransform.h"
 #include <complex>
-#include <vector>
 #include <math.h>
 
 using namespace std;
