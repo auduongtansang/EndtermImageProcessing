@@ -24,12 +24,18 @@
     <ClCompile Include="ComplexImage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FrequencyFilter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FourierTransform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ComplexImage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FrequencyFilter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

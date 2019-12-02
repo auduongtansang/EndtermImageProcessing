@@ -1,20 +1,14 @@
 ﻿#pragma once
 #include <opencv2/opencv.hpp>
-#include "FourierTransform.h"
 #include <complex>
 #include <math.h>
+#include "FourierTransform.h"
 
 using namespace std;
 using namespace cv;
 
 class ComplexImage
 {
-	//Ma trận ảnh phức
-	complex<double> *data;
-
-	//Kích thước data
-	int dataRows, dataCols;
-
 	//Kích thước của ảnh
 	int rows, cols;
 
@@ -22,6 +16,12 @@ class ComplexImage
 	bool isFourierTransformed;
 
 public:
+	//Ma trận ảnh phức
+	complex<double>* data;
+
+	//Kích thước data
+	int dataRows, dataCols;
+
 	ComplexImage();
 	~ComplexImage();
 
