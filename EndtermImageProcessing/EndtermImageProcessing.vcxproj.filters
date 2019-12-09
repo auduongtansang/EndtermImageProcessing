@@ -27,6 +27,12 @@
     <ClCompile Include="FrequencyFilter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Kmean.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Threshold.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FourierTransform.h">
@@ -36,6 +42,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FrequencyFilter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Kmean.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Threshold.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
