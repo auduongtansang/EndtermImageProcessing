@@ -56,7 +56,7 @@ int Kmean::Apply(const Mat & srcImage, Mat & dstImage)
 	for (int i = 0; i < 10; i++) {
 		//Calculate all the distance from the pixel to the centroids and add them to the closest cluster
 		for (int j = 0; j < tmp_rows; j++) {
-			min = 0xffffffff;
+			min = (float)(0xffffffff);
 			index = 0;
 
 			for (int k = 0; k < this->_numClusters; k++) {
@@ -111,7 +111,7 @@ int Kmean::Apply(const Mat & srcImage, Mat & dstImage)
 	//Predict
 	for (int x = 0; x < src_rows; x++) {
 		for (int y = 0; y < src_cols; y++) {
-			min = 0xffffffff;
+			min = (float)(0xffffffff);
 			index = 0;
 
 			for (int k = 0; k < this->_numClusters; k++) {
@@ -132,12 +132,12 @@ int Kmean::Apply(const Mat & srcImage, Mat & dstImage)
 			}
 
 			if (nChannel == 3) {
-				*(p_dest + x * src_cols * nChannel + y * nChannel + 0) = centroids[index].x;
-				*(p_dest + x * src_cols*nChannel + y * nChannel + 1) = centroids[index].y;
-				*(p_dest + x * src_cols*nChannel + y*nChannel + 2) = centroids[index].z;
+				*(p_dest + x * src_cols * nChannel + y * nChannel + 0) = (uchar)(centroids[index].x);
+				*(p_dest + x * src_cols*nChannel + y * nChannel + 1) = (uchar)(centroids[index].y);
+				*(p_dest + x * src_cols*nChannel + y*nChannel + 2) = (uchar)(centroids[index].z);
 			}
 			else {
-				*(p_dest + x * src_cols + y) = centroids[index].x;
+				*(p_dest + x * src_cols + y) = (uchar)(centroids[index].x);
 			}
 		}
 		
@@ -172,5 +172,5 @@ float euclid_distance(float ax, float ay, float az, float bx, float by, float bz
 	if (az == 0.0f && bz == 0.0f)
 		return sqrt(d);
 
-	return pow(d, 1.0 / 3);
+	return (float)(pow(d, 1.0 / 3));
 }

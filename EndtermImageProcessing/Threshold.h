@@ -1,8 +1,7 @@
 ﻿#pragma once
 #include <opencv2/opencv.hpp>
-#include <iostream>
-#include <vector>
 #include <algorithm>
+#include <vector>
 #include <math.h>
 
 using namespace cv;
@@ -63,7 +62,7 @@ public:
 //Phân ngưỡng cục bộ dựa vào trung vị
 class MedianLocalThreshold
 {
-	//hệ số C
+	//Hệ số C
 	int _C;
 
 public:

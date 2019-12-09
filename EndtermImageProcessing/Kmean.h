@@ -1,8 +1,7 @@
 ﻿#pragma once
 #include <opencv2/opencv.hpp>
-#include <iostream>
-#include <vector>
 #include <algorithm>
+#include <vector>
 #include <math.h>
 
 using namespace cv;
@@ -10,7 +9,7 @@ using namespace std;
 
 class Kmean
 {
-	//số cụm K
+	//Số cụm K
 	int _numClusters;
 
 public:
