@@ -127,7 +127,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Blur.cpp" />
+    <ClCompile Include="CannyEdgeDetector.cpp" />
     <ClCompile Include="ComplexImage.cpp" />
+    <ClCompile Include="Convolution.cpp" />
     <ClCompile Include="FourierTransform.cpp" />
     <ClCompile Include="FrequencyFilter.cpp" />
     <ClCompile Include="Kmean.cpp" />
@@ -135,7 +138,10 @@
     <ClCompile Include="Threshold.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Blur.h" />
+    <ClInclude Include="CannyEdgeDetector.h" />
     <ClInclude Include="ComplexImage.h" />
+    <ClInclude Include="Convolution.h" />
     <ClInclude Include="FourierTransform.h" />
     <ClInclude Include="FrequencyFilter.h" />
     <ClInclude Include="Kmean.h" />

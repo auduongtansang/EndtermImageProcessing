@@ -3,6 +3,7 @@
 #include "Threshold.h"
 #include "ComplexImage.h"
 #include "FrequencyFilter.h"
+#include "CannyEdgeDetector.h"
 
 using namespace std;
 using namespace cv;
@@ -196,6 +197,27 @@ int main(int argc, char **argv)
 		//Ghi và hiển thị ảnh
 		imwrite(argv[3], dst);
 		imshow("K-means clustered", dst);
+	}
+
+	//Lọc biên cạnh Canny
+	else if (strcmp(argv[1], "--canny") == 0)
+	{
+		if (argc < 6)
+			return -1;
+
+		//Load ảnh
+		img = imread(argv[2], IMREAD_GRAYSCALE);
+		imshow("Original", img);
+
+		//Lọc biên
+		int low = stoi(argv[4]), high = stoi(argv[5]);
+		CannyEdgeDetector detector;
+		detector.Set(low, high);
+		detector.Apply(img, dst);
+
+		//Ghi và hiển thị ảnh
+		imwrite(argv[3], dst);
+		imshow("Canny edge detected", dst);
 	}
 
 	waitKey(0);

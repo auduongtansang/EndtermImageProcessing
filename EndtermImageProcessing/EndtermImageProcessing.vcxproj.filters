@@ -33,6 +33,15 @@
     <ClCompile Include="Threshold.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Convolution.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Blur.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CannyEdgeDetector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FourierTransform.h">
@@ -48,6 +57,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Threshold.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Convolution.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Blur.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CannyEdgeDetector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
