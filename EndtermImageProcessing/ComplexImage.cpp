@@ -9,8 +9,33 @@ ComplexImage::ComplexImage()
 
 ComplexImage::~ComplexImage()
 {
-	if (data != nullptr)
-		delete[] data;
+	delete[] data;
+}
+
+ComplexImage::ComplexImage(const ComplexImage &image)
+{
+	rows = image.rows;
+	cols = image.cols;
+	dataRows = image.dataRows;
+	dataCols = image.dataCols;
+	isFourierTransformed = image.isFourierTransformed;
+
+	delete[] data;
+	memcpy(data, image.data, dataRows * dataCols * sizeof(complex<double>));
+}
+
+ComplexImage& ComplexImage::operator=(const ComplexImage &image)
+{
+	rows = image.rows;
+	cols = image.cols;
+	dataRows = image.dataRows;
+	dataCols = image.dataCols;
+	isFourierTransformed = image.isFourierTransformed;
+
+	delete[] data;
+	memcpy(data, image.data, dataRows * dataCols * sizeof(complex<double>));
+
+	return *this;
 }
 
 void ComplexImage::FromOpenCVMat(Mat image)

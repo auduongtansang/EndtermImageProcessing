@@ -17,13 +17,15 @@ class ComplexImage
 
 public:
 	//Ma trận ảnh phức
-	complex<double>* data;
+	complex<double> *data;
 
 	//Kích thước data
 	int dataRows, dataCols;
 
 	ComplexImage();
 	~ComplexImage();
+	ComplexImage(const ComplexImage &image);
+	ComplexImage& operator=(const ComplexImage& image);
 
 	//Tạo ComplexImage từ cấu trúc Mat của OpenCV
 	void FromOpenCVMat(Mat image);
